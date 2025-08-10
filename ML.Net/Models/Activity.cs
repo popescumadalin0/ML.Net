@@ -1,14 +1,24 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.ML.Data;
+
 namespace ML.Net.Models;
 
-public class Activity
+public class ItemStock
 {
-    public string Name { get; set; }
-    
-    public bool IsPending { get; set; }
-    
-    public string LastUpdate { get; set; }
-    
-    public string Icon { get; set; }
-    
-    public string Status { get; set; } 
+    [Column("0")] public string ItemID;
+
+    [Column("1")] public float Loccode;
+
+    [Column("2")] public float InQty;
+
+    [Column("3")] public float OutQty;
+
+    [Column("4")] public string ItemType;
+
+    [Column("5")] public float TotalStockQty;
+}
+
+public class itemStockQtyPrediction
+{
+    [ColumnName("Score")] public float TotalStockQty;
 }
