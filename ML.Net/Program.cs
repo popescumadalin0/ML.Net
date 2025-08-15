@@ -1,9 +1,12 @@
-﻿using Microsoft.ML;
+﻿using System.Net;
+using System.Text.Json;
+using Microsoft.ML;
 using ML.Net.Models;
 using Spectre.Console;
 
 var ctx = new MLContext();
 
+/*
 // load data
 var dataView = ctx.Data
     .LoadFromTextFile<ActivityData>("TrainingData/training.csv", hasHeader: true, separatorChar: ';');
@@ -61,4 +64,14 @@ while (true)
     var result = engine.Predict(input);
 
     AnsiConsole.MarkupLine($"{text} - {result.PredictedOutcome} {result.Probability:P00}");
-}
+}*/
+
+
+//JULURVZJ7D5T61FY
+
+const string queryUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=BTCUSD&interval=5min&apikey=JULURVZJ7D5T61FY";
+var queryUri = new Uri(queryUrl);
+
+using var client = new WebClient();
+var jsonString = client.DownloadString(queryUri);
+var json_data = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonString);
