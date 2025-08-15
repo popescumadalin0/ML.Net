@@ -6,18 +6,23 @@ var ctx = new MLContext();
 
 // load data
 var dataView = ctx.Data
-    .LoadFromTextFile<SentimentData>("TrainingData/yelp_labelled.txt");
+    .LoadFromTextFile<ActivityData>("TrainingData/training.csv", hasHeader: true, separatorChar: ';');
 
 // split data into testing set
 var splitDataView = ctx.Data
     .TrainTestSplit(dataView, testFraction: 0.2);
 
 // Build model
-var estimator = ctx.Transforms.Text
-    .FeaturizeText(
-        outputColumnName: "Features",
-        inputColumnName: nameof(SentimentData.Text)
-    ).Append(ctx.BinaryClassification.Trainers.SdcaLogisticRegression(featureColumnName: "Features"));
+var pipeline = ctx.Transforms.Conversion.MapValueToKey("Label", nameof(ActivityData.Outcome))
+    .Append(ctx.Transforms.Text.FeaturizeText("ParamFeatures", nameof(ActivityData.Parameters)))
+    .Append(ctx.Transforms.Text.FeaturizeText("TypeFeatures", nameof(ActivityData.Type)))
+    .Append(ctx.Transforms.Text.FeaturizeText("NameFeatures", nameof(ActivityData.Name)))
+    .Append(ctx.Transforms.Text.FeaturizeText("DescriptionFeatures", nameof(ActivityData.Description)))
+
+    .Append(ctx.Transforms.Concatenate("Features", "ParamFeatures", "TypeFeatures", "NameFeatures", "DescriptionFeatures"))
+
+    .Append(ctx.MulticlassClassification.Trainers.SdcaMaximumEntropy())
+    .Append(ctx.Transforms.Conversion.MapKeyToValue("PredictedLabel"));
 
 // Train model
 ITransformer model = default!;
@@ -28,7 +33,7 @@ AnsiConsole
     .Start(console =>
     {
         // training happens here
-        model = estimator.Fit(splitDataView.TrainSet);
+        model = pipeline.Fit(splitDataView.TrainSet);
         var predictions = model.Transform(splitDataView.TestSet);
 
         rule.Title = "🏁 Training Complete, Evaluating Accuracy.";
@@ -49,14 +54,11 @@ AnsiConsole
 
 while (true)
 {
-    var text = AnsiConsole.Ask<string>("What's your [green]review text[/]?");
-    var engine = ctx.Model.CreatePredictionEngine<SentimentData, SentimentPrediction>(model);
+    var text = AnsiConsole.Ask<string>("What are your [green]activity properties[/]?");
+    var engine = ctx.Model.CreatePredictionEngine<ActivityData, ActivityPrediction>(model);
 
-    var input = new SentimentData { Text = text };
+    var input = new ActivityData { Parameters = text, Type = "CreateDocument", Name = "CreateDocument" };
     var result = engine.Predict(input);
-    var style = result.Prediction
-        ? (color: "green", emoji: "👍")
-        : (color: "red", emoji: "👎");
 
-    AnsiConsole.MarkupLine($"{style.emoji} [{style.color}]\"{text}\" ({result.Probability:P00})[/] ");
+    AnsiConsole.MarkupLine($"{text} - {result.PredictedOutcome} {result.Probability:P00}");
 }

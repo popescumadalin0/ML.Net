@@ -3,22 +3,23 @@ using Microsoft.ML.Data;
 
 namespace ML.Net.Models;
 
-public class ItemStock
+public class ActivityData
 {
-    [Column("0")] public string ItemID;
-
-    [Column("1")] public float Loccode;
-
-    [Column("2")] public float InQty;
-
-    [Column("3")] public float OutQty;
-
-    [Column("4")] public string ItemType;
-
-    [Column("5")] public float TotalStockQty;
+    [ColumnName("Type")] public string Type { get; set; }
+    
+    [ColumnName("Name")] public string Name { get; set; }
+    
+    [ColumnName("Description")] public string Description { get; set; }
+    
+    [ColumnName("Parameters")] public string Parameters { get; set; }
+    
+    [ColumnName("Outcome")] public string Outcome { get; set; }
 }
 
-public class itemStockQtyPrediction
+public class ActivityPrediction
 {
-    [ColumnName("Score")] public float TotalStockQty;
+    [ColumnName("PredictedLabel")] public string PredictedOutcome { get; set; }
+    
+    public float Probability { get; set; }
+    public float Score { get; set; }
 }
