@@ -196,6 +196,22 @@
           }
         }
       },
+      "Spectre.Console/0.45.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Memory": "4.5.5"
+        },
+        "compile": {
+          "lib/net6.0/Spectre.Console.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Spectre.Console.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.CodeDom/8.0.0": {
         "type": "package",
         "compile": {
@@ -402,6 +418,22 @@
         "packageIcon.png"
       ]
     },
+    "Spectre.Console/0.45.0": {
+      "sha512": "e//13o8/BCrWmwN26eJ4zCzD2iq7iUlqQd+nDI9nJUdnJ/rYAanYiNFZZ7YHwlv48IKuKtRYYP6/wPt1DG67ww==",
+      "type": "package",
+      "path": "spectre.console/0.45.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net6.0/Spectre.Console.dll",
+        "lib/net6.0/Spectre.Console.xml",
+        "lib/netstandard2.0/Spectre.Console.dll",
+        "lib/netstandard2.0/Spectre.Console.xml",
+        "small-logo.png",
+        "spectre.console.0.45.0.nupkg.sha512",
+        "spectre.console.nuspec"
+      ]
+    },
     "System.CodeDom/8.0.0": {
       "sha512": "WTlRjL6KWIMr/pAaq3rYqh0TJlzpouaQ/W1eelssHgtlwHAH25jXTkUphTYx9HaIIf7XA6qs/0+YhtLEQRkJ+Q==",
       "type": "package",
@@ -604,23 +636,24 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
-      "Microsoft.ML >= 4.0.2"
+      "Microsoft.ML >= 4.0.2",
+      "Spectre.Console >= 0.45.0"
     ]
   },
   "packageFolders": {
-    "/Users/madalinpopescu/.nuget/packages/": {}
+    "C:\\Users\\dizzy\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/madalinpopescu/RiderProjects/ML.Net/ML.Net/ML.Net.csproj",
+      "projectUniqueName": "C:\\Work\\ML.Net\\ML.Net\\ML.Net.csproj",
       "projectName": "ML.Net",
-      "projectPath": "/Users/madalinpopescu/RiderProjects/ML.Net/ML.Net/ML.Net.csproj",
-      "packagesPath": "/Users/madalinpopescu/.nuget/packages/",
-      "outputPath": "/Users/madalinpopescu/RiderProjects/ML.Net/ML.Net/obj/",
+      "projectPath": "C:\\Work\\ML.Net\\ML.Net\\ML.Net.csproj",
+      "packagesPath": "C:\\Users\\dizzy\\.nuget\\packages\\",
+      "outputPath": "C:\\Work\\ML.Net\\ML.Net\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/madalinpopescu/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\dizzy\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -653,6 +686,10 @@
           "Microsoft.ML": {
             "target": "Package",
             "version": "[4.0.2, )"
+          },
+          "Spectre.Console": {
+            "target": "Package",
+            "version": "[0.45.0, )"
           }
         },
         "imports": [
@@ -671,7 +708,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
